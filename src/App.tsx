@@ -1,25 +1,25 @@
+// @ts-ignore
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useSelector } from 'react-redux';
+import { WebsocketStore } from './@types/storeInterfaces';
 
-function App() {
+const App = () => {
+  const stompClient = useSelector(({ stompClient }: WebsocketStore) => stompClient);
+  const messages = useSelector(({messages}: WebsocketStore) => messages);
+
+  const sendMessage = () => {
+    stompClient?.publish({destination: '/app/test', body: JSON.stringify({ chatId: "100000", message: "message", sender: "me"})})
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div>
+      <button onClick={() => sendMessage()}>ADD MESSAGE</button>
     </div>
+    <div>
+      <p>{`Number of messages = ${messages.length}`}</p>
+    </div>
+    </>
   );
 }
 
