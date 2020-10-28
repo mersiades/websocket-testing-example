@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { Client } from '@stomp/stompjs';
+import { Client } from 'webstomp-client';
 
 export interface AddClient extends Action<'ADD_CLIENT'> {
   stompClient: Client;

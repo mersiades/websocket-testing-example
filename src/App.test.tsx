@@ -6,7 +6,7 @@ import App from './App';
 import { createStore } from 'redux';
 import { websocketReducer } from './reducers/websocketReducer';
 import { Provider } from 'react-redux';
-import { connectStompClient } from './services/websocketService';
+// import { connectStompClient } from './services/websocketService';
 
 
 let wrappedApp: any
@@ -40,16 +40,20 @@ describe('Rendering App', () => {
     WS.clean();
   });
 
-  test('should render App in initial state', () => {
+  test('should render before websocket connects', () => {
+    expect(wrappedApp.text()).toEqual("Websocket: Not connected")
+  });
+
+  test('should render App after ws connection', async () => {
+    // Wait for mock server to connect to STOMP client
+    await server.connected
+    
     expect(wrappedApp.find('button').text()).toEqual('ADD MESSAGE');
     expect(wrappedApp.find('h3').text()).toEqual('Number of messages:');
     expect(wrappedApp.find('[data-test="message-count"]').text()).toEqual('0');
   });
 
   test('should increment message count', async () => {
-    // Get the real STOMP client started & connected
-    connectStompClient()
-
     // Wait for mock server to connect to STOMP client
     await server.connected
     

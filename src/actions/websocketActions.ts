@@ -1,4 +1,4 @@
-import { Client } from '@stomp/stompjs';
+import { Client } from 'webstomp-client';
 import {
   AddClient, AddMessage,
 } from '../@types/actionsInterfaces';
