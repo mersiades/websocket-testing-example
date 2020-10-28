@@ -3,16 +3,21 @@ import { useSelector } from 'react-redux';
 import { WebsocketStore } from './@types/storeInterfaces';
 import { connectWebstompClient } from './services/webstompService';
 
-const App: FC = () => {
+interface AppProps {
+  // Dependency injection for testing
+  endpoint?: string
+}
+
+const App: FC<AppProps> = ({ endpoint = 'ws://localhost:8081/chat'}) => {
   const stompClient = useSelector(({ stompClient }: WebsocketStore) => stompClient);
   const messages = useSelector(({messages}: WebsocketStore) => messages);
 
   useEffect(() => {
-    !stompClient && connectWebstompClient()
-  }, [stompClient])
+    !stompClient && connectWebstompClient(endpoint)
+  }, [stompClient, endpoint])
 
   const sendMessage = () => {
-    console.log('clicked')
+    console.log('clicked ADD MESSAGE')
     stompClient?.send('/app/test', JSON.stringify({ chatId: "100000", message: "message", sender: "me"}))
   }
 

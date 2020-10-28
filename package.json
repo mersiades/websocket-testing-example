@@ -51,6 +51,8 @@
     "enzyme-adapter-react-16": "^1.15.5",
     "fast-text-encoding": "^1.0.3",
     "jest-websocket-mock": "^2.2.0",
-    "mock-socket": "^9.0.3"
+    "mock-socket": "^9.0.3",
+    "mock-stomp-broker": "^1.2.0",
+    "waait": "^1.0.5"
   }
 }
