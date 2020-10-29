@@ -12,7 +12,6 @@ export const websocketReducer: Reducer<WebsocketStore, WebsocketActions> = (
 ) => {
   switch (action.type) {
     case 'ADD_CLIENT':
-      console.log('adding client to store', action.stompClient)
       return {
         ...state,
         stompClient: action.stompClient,

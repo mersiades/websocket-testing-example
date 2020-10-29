@@ -1,6 +1,5 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import wait from 'waait';
 import { mount, ReactWrapper } from 'enzyme';
 import MockStompBroker from "mock-stomp-broker";
 import App from './App';
@@ -14,7 +13,7 @@ let props: any;
 
 const createTestProps = (props: any) => ({ ...props });
 
-const getEndpoint = (port: number) => `http://localhost:${port}/websocket`;
+const getEndpoint = (port: number) => `ws://localhost:${port}/websocket`;
 
 export function makeTestStore(initialState: any) {
   const store = createStore(websocketReducer, initialState);
@@ -52,7 +51,7 @@ describe('Rendering App', () => {
 
     // At this point, stompClient should be in the store, but it isn't
     const store = wrappedApp.find(Provider).prop('store')
-    console.log('store', store)
+    console.log('store.stompEndpoint', store.getState().stompEndpoint)
     
     // useSelector hook doesn't find stompClient in Redux store, so App doesn't render properly.
     expect(wrappedApp.find('button').text()).toEqual('ADD MESSAGE');  // Fails to find the button element.
