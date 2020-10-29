@@ -1,10 +1,12 @@
+import SockJS from 'sockjs-client';
 import webstomp, { Message } from 'webstomp-client';
 import { addClient, addMessage } from '../actions/websocketActions'
 import store from '../store';
 
 export const connectWebstompClient = (endpoint: string) => {
   console.log('connecting webstomp client')
-  const stompClient = webstomp.client(endpoint)
+  const socket = new SockJS(endpoint)
+  const stompClient = webstomp.over(socket)
   
   stompClient.connect({/* no headers */}, () => {
     console.log('subscribing to /topic/test')

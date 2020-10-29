@@ -14,7 +14,7 @@ let props: any;
 
 const createTestProps = (props: any) => ({ ...props });
 
-const getEndpoint = (port: number) => `ws://localhost:${port}/websocket`;
+const getEndpoint = (port: number) => `http://localhost:${port}/websocket`;
 
 export function makeTestStore(initialState: any) {
   const store = createStore(websocketReducer, initialState);

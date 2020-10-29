@@ -8,7 +8,7 @@ interface AppProps {
   endpoint?: string
 }
 
-const App: FC<AppProps> = ({ endpoint = 'ws://localhost:8081/chat'}) => {
+const App: FC<AppProps> = ({ endpoint = 'http://localhost:8081/chat'}) => {
   const stompClient = useSelector(({ stompClient }: WebsocketStore) => stompClient);
   const messages = useSelector(({messages}: WebsocketStore) => messages);
 
@@ -21,7 +21,6 @@ const App: FC<AppProps> = ({ endpoint = 'ws://localhost:8081/chat'}) => {
     stompClient?.send('/app/test', JSON.stringify({ chatId: "100000", message: "message", sender: "me"}))
   }
 
-  console.log('stompClient', stompClient)
   if (!!stompClient && stompClient.connected) {
     return (
     <>
