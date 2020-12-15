@@ -4,12 +4,14 @@ import { addClient, addMessage } from '../actions/websocketActions'
 import store from '../store';
 
 export const connectWebstompClient = () => {
-  console.log('connecting webstomp client')
+  
   const websocketsAreNotAvailableInTheBrowser = typeof WebSocket !== 'function';
   let stompClient: Client
   if (websocketsAreNotAvailableInTheBrowser) {
+    console.log('Creating SockJS fallback')
     stompClient = webstomp.over(new SockJS('http://localhost:8081/test'))
   } else {
+    console.log('Creating websocket')
     stompClient = webstomp.client('ws://localhost:8081/test', {
       // heartbeat: { incoming: 10000, outgoing: 10000},
       heartbeat: false,
@@ -17,6 +19,7 @@ export const connectWebstompClient = () => {
     })
   }
   
+  console.log('connecting webstomp client')
   stompClient.connect({/* no headers */}, () => onConnect(), (error: Frame | CloseEvent) => onError(error))
 
   const onConnect = () => {
